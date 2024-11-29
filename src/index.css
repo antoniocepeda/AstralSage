@@ -48,11 +48,11 @@
 
   .gradient-bg {
     position: relative;
-    background: linear-gradient(-45deg, 
+    background: linear-gradient(
+      to bottom right,
       var(--accent),
-      rgb(168, 85, 247), /* purple */
-      rgb(59, 130, 246), /* blue */
-      rgb(139, 92, 246)  /* violet */
+      rgb(168, 85, 247), /* purple-500 */
+      rgb(59, 130, 246)  /* blue-500 */
     );
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
@@ -73,23 +73,22 @@
 }
 
 /* Dark mode override */
-.dark .gradient-bg {
-  background: linear-gradient(-45deg, 
-    rgba(99, 102, 241, 0.2),   /* accent */
-    rgba(168, 85, 247, 0.2),   /* purple */
-    rgba(59, 130, 246, 0.2),   /* blue */
-    rgba(139, 92, 246, 0.2)    /* violet */
+[data-theme="dark"] .gradient-bg {
+  background: linear-gradient(
+    to bottom right,
+    rgba(99, 102, 241, 0.2),   /* accent with opacity */
+    rgba(168, 85, 247, 0.2),   /* purple with opacity */
+    rgba(59, 130, 246, 0.2)    /* blue with opacity */
   );
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
 }
 
-.dark .gradient-bg::before {
+[data-theme="dark"] .gradient-bg::before {
   background: linear-gradient(
     to bottom,
-    rgba(15, 23, 42, 0) 0%,    /* --background with 0 opacity */
-    rgba(15, 23, 42, 0.8) 80%, /* --background with 0.8 opacity */
-    rgba(15, 23, 42, 1) 100%   /* --background with full opacity */
+    transparent 0%,
+    var(--background) 95%,
+    var(--background) 100%
   );
 }
 

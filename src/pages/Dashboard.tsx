@@ -5,6 +5,7 @@ import { InsightCard } from '../components/dashboard/InsightCard';
 import { PlanetaryChart } from '../components/dashboard/PlanetaryChart';
 import { TransitTimeline } from '../components/dashboard/TransitTimeline';
 import { useAuth } from '../contexts/AuthContext';
+import { BaseInput } from '../components/ui/BaseInput';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -79,6 +80,12 @@ export const Dashboard: React.FC = () => {
           <PlanetaryChart positions={planetaryPositions} />
           <TransitTimeline transits={upcomingTransits} />
         </div>
+
+        <BaseInput 
+          label="Search" 
+          placeholder="Search insights..."
+          className="max-w-md"
+        />
       </div>
     </div>
   );

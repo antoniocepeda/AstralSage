@@ -1,0 +1,9 @@
+export const FIREBASE_CONFIG_KEYS = [
+  'API_KEY',
+  'AUTH_DOMAIN',
+  'PROJECT_ID',
+  'STORAGE_BUCKET',
+  'MESSAGING_SENDER_ID',
+  'APP_ID',
+  'MEASUREMENT_ID'
+] as const; 

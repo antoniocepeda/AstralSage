@@ -1,15 +1,16 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface BaseInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  containerClassName?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
+  ({ label, error, className = '', containerClassName = '', ...props }, ref) => {
     return (
-      <div className="space-y-2">
+      <div className={cn("space-y-2", containerClassName)}>
         {label && (
           <label className="block text-sm font-medium text-text-primary">
             {label}
@@ -35,4 +36,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input';
+BaseInput.displayName = 'BaseInput'; 
