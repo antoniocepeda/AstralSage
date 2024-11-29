@@ -12,6 +12,9 @@ export default {
         border: 'var(--border)',
         'card-bg': 'var(--card-bg)',
       },
+      scale: {
+        '102': '1.02',
+      },
     },
   },
   plugins: [],

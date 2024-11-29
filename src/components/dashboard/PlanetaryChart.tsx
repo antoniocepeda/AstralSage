@@ -14,23 +14,23 @@ interface PlanetaryChartProps {
 
 export const PlanetaryChart: React.FC<PlanetaryChartProps> = ({ positions }) => {
   return (
-    <div className="glass-card rounded-lg p-6">
+    <div className="glass-card rounded-lg p-6 card-hover">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold">Current Planetary Positions</h3>
-        <Moon className="h-6 w-6 text-indigo-600 animate-glow" />
+        <h3 className="text-lg font-semibold text-default">Current Planetary Positions</h3>
+        <Moon className="h-6 w-6 accent-glow" />
       </div>
       <div className="space-y-4">
         {positions.map((position, index) => (
           <div 
             key={index}
-            className="flex items-center justify-between p-3 rounded-lg bg-white/50 hover:bg-white/80 transition-colors"
+            className="flex items-center justify-between p-3 rounded-lg bg-card-bg hover:bg-card-bg/80 transition-colors"
           >
             <div className="flex items-center space-x-3">
-              <span className="font-medium">{position.planet}</span>
-              <span className="text-gray-600">in</span>
-              <span className="font-medium text-indigo-600">{position.sign}</span>
+              <span className="font-medium text-default">{position.planet}</span>
+              <span className="text-secondary">in</span>
+              <span className="font-medium accent-glow">{position.sign}</span>
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-secondary">
               {position.degree}° | House {position.house}
             </div>
           </div>

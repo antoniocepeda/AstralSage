@@ -24,6 +24,76 @@
   }
 }
 
+@layer components {
+  .glass-card {
+    @apply bg-card-bg backdrop-blur-md border border-border shadow-lg 
+           transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:scale-105 hover:shadow-xl transition-all duration-300;
+  }
+
+  .text-default {
+    @apply text-text-primary;
+  }
+
+  .text-secondary {
+    @apply text-text-secondary;
+  }
+
+  .accent-glow {
+    @apply text-accent animate-glow;
+  }
+
+  .gradient-bg {
+    position: relative;
+    background: linear-gradient(-45deg, 
+      var(--accent),
+      rgb(168, 85, 247), /* purple */
+      rgb(59, 130, 246), /* blue */
+      rgb(139, 92, 246)  /* violet */
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+
+  .gradient-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--background) 95%,
+      var(--background) 100%
+    );
+    pointer-events: none;
+  }
+}
+
+/* Dark mode override */
+.dark .gradient-bg {
+  background: linear-gradient(-45deg, 
+    rgba(99, 102, 241, 0.2),   /* accent */
+    rgba(168, 85, 247, 0.2),   /* purple */
+    rgba(59, 130, 246, 0.2),   /* blue */
+    rgba(139, 92, 246, 0.2)    /* violet */
+  );
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+.dark .gradient-bg::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0) 0%,    /* --background with 0 opacity */
+    rgba(15, 23, 42, 0.8) 80%, /* --background with 0.8 opacity */
+    rgba(15, 23, 42, 1) 100%   /* --background with full opacity */
+  );
+}
+
+/* Animations */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
@@ -42,6 +112,7 @@
   100% { background-position: 0% 50%; }
 }
 
+/* Animation classes */
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -50,51 +121,17 @@
   animation: glow 3s ease-in-out infinite;
 }
 
-.gradient-bg {
-  background: linear-gradient(-45deg, 
-    var(--accent),
-    rgb(168, 85, 247), /* Keep purple consistent */
-    rgb(59, 130, 246), /* Keep blue consistent */
-    rgb(139, 92, 246)  /* Keep violet consistent */
-  );
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  mix-blend-mode: normal;
-}
-
-/* Add dark mode specific gradient */
-.dark .gradient-bg {
-  mix-blend-mode: soft-light;
-}
-
-.glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.glass-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.dark .glass-card:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-}
-
-.hover\:scale-102:hover {
-  transform: scale(1.02);
-}
-
-/* Apply these variables to your base elements */
+/* Base styles */
 body {
   min-height: 100vh;
   background-color: var(--background);
   color: var(--text-primary);
 }
 
-/* Add smooth transitions for theme changes */
+/* Theme transitions */
 body, .glass-card, button, a {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, 
+             color 0.3s ease, 
+             border-color 0.3s ease, 
+             box-shadow 0.3s ease;
 }

@@ -9,19 +9,19 @@ interface InsightCardProps {
 
 export const InsightCard: React.FC<InsightCardProps> = ({ title, prediction, confidence }) => {
   return (
-    <div className="glass-card rounded-lg p-6 hover:scale-102 transition-all duration-300">
+    <div className="glass-card rounded-lg p-6 card-hover">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <Brain className="h-6 w-6 text-purple-600 animate-glow" />
+        <h3 className="text-lg font-semibold text-default">{title}</h3>
+        <Brain className="h-6 w-6 accent-glow" />
       </div>
-      <p className="text-gray-600 mb-4">{prediction}</p>
-      <div className="w-full bg-gray-200 rounded-full h-2">
+      <p className="text-secondary mb-4">{prediction}</p>
+      <div className="w-full bg-background rounded-full h-2">
         <div 
-          className="bg-purple-600 rounded-full h-2 animate-pulse"
+          className="bg-accent rounded-full h-2 animate-pulse"
           style={{ width: `${confidence}%` }}
         />
       </div>
-      <p className="text-sm text-gray-500 mt-2">AI Confidence: {confidence}%</p>
+      <p className="text-sm text-secondary mt-2">AI Confidence: {confidence}%</p>
     </div>
   );
 };

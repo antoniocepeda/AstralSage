@@ -45,82 +45,39 @@ export const Dashboard: React.FC = () => {
         <div className="glass-card rounded-lg p-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold mb-2">Welcome back, {user?.name}</h1>
-              <p className="text-gray-600">Your Cosmic Journey Continues</p>
+              <h1 className="text-2xl font-bold mb-2 text-default">Welcome back, {user?.name}</h1>
+              <p className="text-secondary">Your Cosmic Journey Continues</p>
             </div>
             <div className="flex items-center space-x-2">
-              <Brain className="h-8 w-8 text-purple-600 animate-glow" />
-              <span className="text-sm font-medium">AI Analysis Ready</span>
+              <Brain className="h-8 w-8 accent-glow" />
+              <span className="text-sm font-medium text-secondary">AI Analysis Ready</span>
             </div>
           </div>
         </div>
 
-        {/* AI Insights Grid */}
+        {/* Grid of insight cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <InsightCard
             title="Career Trajectory"
-            prediction="Mars in your 10th house suggests a significant career opportunity this week. Stay alert for leadership roles."
-            confidence={92}
+            prediction="Your professional path is entering a phase of innovation and growth."
+            confidence={85}
           />
           <InsightCard
             title="Relationship Insights"
-            prediction="Venus-Jupiter aspect indicates potential for meaningful connections. Social gatherings will be particularly favorable."
-            confidence={87}
+            prediction="A period of deep connections and meaningful conversations approaches."
+            confidence={92}
           />
           <InsightCard
             title="Personal Growth"
-            prediction="Saturn's position supports long-term learning. Consider starting that course you've been thinking about."
-            confidence={94}
+            prediction="Focus on creative pursuits will yield unexpected rewards."
+            confidence={88}
           />
         </div>
 
-        {/* Main Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <PlanetaryChart positions={planetaryPositions} />
-          </div>
-          <div>
-            <TransitTimeline transits={upcomingTransits} />
-          </div>
-        </div>
-
-        {/* Daily Aspects Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <AstroCard title="Daily Energy" icon={Sun}>
-            <div className="space-y-2">
-              <p className="text-gray-600">
-                Sun trine Moon brings harmony between your conscious and subconscious mind.
-              </p>
-              <div className="flex items-center space-x-2 text-sm text-indigo-600">
-                <Sparkles className="h-4 w-4" />
-                <span>Peak Energy Time: 2:30 PM</span>
-              </div>
-            </div>
-          </AstroCard>
-          
-          <AstroCard title="Meditation Focus" icon={Moon}>
-            <div className="space-y-2">
-              <p className="text-gray-600">
-                Lunar position suggests focusing on heart chakra meditation today.
-              </p>
-              <div className="flex items-center space-x-2 text-sm text-indigo-600">
-                <Star className="h-4 w-4" />
-                <span>Recommended Duration: 20 mins</span>
-              </div>
-            </div>
-          </AstroCard>
-
-          <AstroCard title="Daily Affirmation" icon={Star}>
-            <div className="space-y-2">
-              <p className="text-gray-600">
-                "I am aligned with the cosmic energy and open to receiving guidance."
-              </p>
-              <div className="flex items-center space-x-2 text-sm text-indigo-600">
-                <Brain className="h-4 w-4" />
-                <span>AI-Generated for Your Chart</span>
-              </div>
-            </div>
-          </AstroCard>
+        {/* Planetary info section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <PlanetaryChart positions={planetaryPositions} />
+          <TransitTimeline transits={upcomingTransits} />
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
+import { FirebaseError } from 'firebase/app';
 
 const signupSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -17,13 +18,30 @@ const signupSchema = z.object({
 type SignupForm = z.infer<typeof signupSchema>;
 
 export const Signup: React.FC = () => {
-  const { signup, error, isLoading } = useAuth();
+  const { signup, error, isLoading, setError } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = (data: SignupForm) => {
-    signup(data);
+  const onSubmit = async (data: SignupForm) => {
+    try {
+      await signup(data);
+      // Redirect happens automatically via AuthContext
+    } catch (error) {
+      // Handle specific Firebase auth errors
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            setError('This email is already registered');
+            break;
+          case 'auth/weak-password':
+            setError('Password should be at least 6 characters');
+            break;
+          default:
+            setError('Failed to create account');
+        }
+      }
+    }
   };
 
   return (
