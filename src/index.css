@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Light theme colors */
+    --background: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --accent: #6366f1;
+    --border: #e2e8f0;
+    --card-bg: rgba(255, 255, 255, 0.9);
+  }
+
+  [data-theme="dark"] {
+    /* Dark theme colors */
+    --background: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --accent: #818cf8;
+    --border: #1e293b;
+    --card-bg: rgba(30, 41, 59, 0.9);
+  }
+}
+
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
@@ -29,16 +51,27 @@
 }
 
 .gradient-bg {
-  background: linear-gradient(-45deg, #6366f1, #a855f7, #3b82f6, #8b5cf6);
+  background: linear-gradient(-45deg, 
+    var(--accent),
+    rgb(168, 85, 247), /* Keep purple consistent */
+    rgb(59, 130, 246), /* Keep blue consistent */
+    rgb(139, 92, 246)  /* Keep violet consistent */
+  );
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
+  mix-blend-mode: normal;
+}
+
+/* Add dark mode specific gradient */
+.dark .gradient-bg {
+  mix-blend-mode: soft-light;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .glass-card:hover {
@@ -46,6 +79,22 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.dark .glass-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
 .hover\:scale-102:hover {
   transform: scale(1.02);
+}
+
+/* Apply these variables to your base elements */
+body {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+/* Add smooth transitions for theme changes */
+body, .glass-card, button, a {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

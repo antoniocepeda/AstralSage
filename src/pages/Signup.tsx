@@ -1,84 +1,76 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Link } from 'react-router-dom';
 import { Moon } from 'lucide-react';
-import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
-import { useAuth } from '../contexts/AuthContext';
-
-const signupSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Please enter a valid date (YYYY-MM-DD)'),
-});
-
-type SignupForm = z.infer<typeof signupSchema>;
 
 export const Signup: React.FC = () => {
-  const { login } = useAuth();
-  const { register, handleSubmit, formState: { errors } } = useForm<SignupForm>({
-    resolver: zodResolver(signupSchema),
-  });
-
-  const onSubmit = (data: SignupForm) => {
-    // For demo purposes, automatically log in after signup
-    login(data.email, data.password);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Handle signup logic here
+    const formData = new FormData(e.currentTarget);
+    console.log({
+      email: formData.get('email'),
+      password: formData.get('password'),
+    });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <Moon className="mx-auto h-12 w-12 text-indigo-600 animate-glow" />
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Begin Your Cosmic Journey
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Create your account to unlock personalized astrological insights
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            <Input
-              label="Full Name"
-              type="text"
-              {...register('name')}
-              error={errors.name?.message}
-            />
-            <Input
-              label="Email address"
-              type="email"
-              {...register('email')}
-              error={errors.email?.message}
-            />
-            <Input
-              label="Password"
-              type="password"
-              {...register('password')}
-              error={errors.password?.message}
-            />
-            <Input
-              label="Birth Date"
-              type="date"
-              {...register('birthDate')}
-              error={errors.birthDate?.message}
-            />
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-background">
+      <div className="max-w-md mx-auto">
+        <div className="glass-card rounded-lg p-8">
+          <div className="text-center mb-8">
+            <Moon className="mx-auto h-12 w-12 text-accent animate-glow" />
+            <h2 className="mt-6 text-3xl font-bold text-text-primary">
+              Begin Your Cosmic Journey
+            </h2>
+            <p className="mt-2 text-text-secondary">
+              Create your account to unlock personalized astrological insights
+            </p>
           </div>
 
-          <Button type="submit" className="w-full">
-            Sign up
-          </Button>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-text-secondary">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
+                placeholder="Enter your email"
+              />
+            </div>
 
-          <p className="text-center text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Sign in
-            </Link>
-          </p>
-        </form>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-text-secondary">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
+                placeholder="Create a password"
+              />
+            </div>
+
+            <Button type="submit" className="w-full">
+              Sign up
+            </Button>
+
+            <p className="text-center text-text-secondary">
+              Already have an account?{' '}
+              <Link to="/login" className="text-accent hover:underline">
+                Log in
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

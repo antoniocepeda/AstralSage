@@ -15,9 +15,9 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
   
   const variants = {
-    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
+    primary: 'bg-accent text-white hover:bg-accent/90 focus:ring-accent/50',
     secondary: 'bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500',
-    outline: 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 focus:ring-indigo-500',
+    outline: 'border-2 border-accent text-accent hover:bg-accent/10 focus:ring-accent/50',
   };
 
   const sizes = {
