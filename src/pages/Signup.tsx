@@ -1,17 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Moon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Button } from '../components/ui/Button';
+import { useAuth } from '../contexts/AuthContext';
+
+const signupSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
+});
+
+type SignupForm = z.infer<typeof signupSchema>;
 
 export const Signup: React.FC = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Handle signup logic here
-    const formData = new FormData(e.currentTarget);
-    console.log({
-      email: formData.get('email'),
-      password: formData.get('password'),
-    });
+  const { signup, error, isLoading } = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm<SignupForm>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit = (data: SignupForm) => {
+    signup(data);
   };
 
   return (
@@ -28,20 +40,57 @@ export const Signup: React.FC = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="mb-4 p-3 rounded bg-red-100 text-red-600">
+              {error}
+            </div>
+          )}
+
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-text-secondary">
                 Email address
               </label>
               <input
                 id="email"
-                name="email"
                 type="email"
                 autoComplete="email"
-                required
                 className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
-                placeholder="Enter your email"
+                {...register('email')}
               />
+              {errors.email?.message && (
+                <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-text-secondary">
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
+                {...register('name')}
+              />
+              {errors.name?.message && (
+                <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="birthDate" className="block text-sm font-medium text-text-secondary">
+                Birth Date
+              </label>
+              <input
+                id="birthDate"
+                type="date"
+                className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
+                {...register('birthDate')}
+              />
+              {errors.birthDate?.message && (
+                <p className="mt-1 text-sm text-red-500">{errors.birthDate.message}</p>
+              )}
             </div>
 
             <div>
@@ -50,17 +99,21 @@ export const Signup: React.FC = () => {
               </label>
               <input
                 id="password"
-                name="password"
                 type="password"
-                autoComplete="new-password"
-                required
                 className="mt-1 w-full rounded-md border border-border bg-card-bg p-2 text-text-primary"
-                placeholder="Create a password"
+                {...register('password')}
               />
+              {errors.password?.message && (
+                <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+              )}
             </div>
 
-            <Button type="submit" className="w-full">
-              Sign up
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating account...' : 'Sign up'}
             </Button>
 
             <p className="text-center text-text-secondary">

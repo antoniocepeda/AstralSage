@@ -15,7 +15,7 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export const Login: React.FC = () => {
-  const { login } = useAuth();
+  const { login, error, isLoading } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
