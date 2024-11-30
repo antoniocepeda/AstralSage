@@ -1,18 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Navbar } from './components/layout/Navbar';
+import { Navbar } from '@/shared/components/Layout/Navbar';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
-import { AuthProvider } from './contexts/AuthContext';
-import { useAuth } from './contexts/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
-
-const PrivateRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? element : <Navigate to="/login" />;
-};
+import { AuthProvider } from '@/features/auth/contexts/AuthContext';
+import { useAuth } from '@/features/auth/contexts/AuthContext';
+import { ThemeProvider } from '@/features/theme/contexts/ThemeContext';
+import { PrivateRoute } from '@/features/auth/components/PrivateRoute';
 
 export const App: React.FC = () => {
   return (
@@ -28,7 +24,7 @@ export const App: React.FC = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route
                   path="/dashboard"
-                  element={<PrivateRoute element={<Dashboard />} />}
+                  element={<PrivateRoute children={<Dashboard />} />}
                 />
               </Routes>
             </main>
